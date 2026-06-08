@@ -2,9 +2,9 @@ spring:
   application:
     name: base_spring_boot
   datasource:
-    url: jdbc:mysql://localhost:3307/base_core?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/base_core?createDatabaseIfNotExist=true
     username: root
-    password: 123456
+    password: Londeocan1
   jpa:
     hibernate:
       naming:
@@ -22,3 +22,4 @@ jwt:
     key: daylachuoimahoabimatrikkei0987654321dacbietracroi
   expired:
     access: 864000
+    refresh: 604800000

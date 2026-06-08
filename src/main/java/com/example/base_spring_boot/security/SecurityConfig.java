@@ -43,7 +43,7 @@ public class SecurityConfig
                 .cors(cf -> cf.configurationSource(request ->
                 {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:5173")); // phụ thuộc vào port clents
+                    config.setAllowedOrigins(List.of("http://localhost:5173"));
                     config.setAllowedMethods(List.of("*"));
                     config.setAllowCredentials(true);
                     config.setAllowedHeaders(List.of("*"));
@@ -53,6 +53,8 @@ public class SecurityConfig
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         url -> url
+                                .requestMatchers("/api/v1/auth/login", "/api/v1/auth/register", "/api/v1/auth/refresh-token").permitAll()
+                                .requestMatchers("/api/v1/auth/logout").authenticated()
                                 .requestMatchers("/api/v1/admin/**").hasAuthority(RoleName.ROLE_ADMIN.toString())
                                 .requestMatchers("/api/v1/user/**").hasAuthority(RoleName.ROLE_USER.toString())
                                 .anyRequest().permitAll()

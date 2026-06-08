@@ -2,6 +2,7 @@ package com.example.base_spring_boot.controllers;
 
 import com.example.base_spring_boot.models.dtos.req.LoginReq;
 import com.example.base_spring_boot.models.dtos.req.RegisterReq;
+import com.example.base_spring_boot.models.dtos.req.TokenRefreshRequest;
 import com.example.base_spring_boot.models.dtos.wrapper.DataRes;
 import com.example.base_spring_boot.models.services.IAuthService;
 import jakarta.validation.Valid;
@@ -50,4 +51,28 @@ public class AuthController
         );
     }
 
+    @PostMapping("/refresh-token")
+    public ResponseEntity<?> handleRefreshToken(@Valid @RequestBody TokenRefreshRequest req)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                DataRes.builder()
+                        .status(HttpStatus.OK)
+                        .code(200)
+                        .data(authService.refreshToken(req))
+                        .build()
+        );
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> handleLogout()
+    {
+        authService.logout();
+        return ResponseEntity.status(HttpStatus.OK).body(
+                DataRes.builder()
+                        .status(HttpStatus.OK)
+                        .code(200)
+                        .data("Logout successfully")
+                        .build()
+        );
+    }
 }
